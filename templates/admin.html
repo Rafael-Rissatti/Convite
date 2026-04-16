@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Mestre Pokémon</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body style="display: block; padding: 20px;">
+    <div class="admin-container" style="margin: 0 auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h1 style="color: #3B4CCA;">Pokédex de Convidados</h1>
+            <a href="/logout" style="color: #FF0000; font-weight: bold; text-decoration: none;">Sair</a>
+        </div>
+        
+        <div class="stats-grid">
+            <div style="max-width: 400px; margin: 0 auto;">
+                <canvas id="statsChart"></canvas>
+            </div>
+            <div>
+                <h3>Resumo da Batalha</h3>
+                <p><strong>Confirmados:</strong> {{ confirmados|length }}</p>
+                <p><strong>Ausentes:</strong> {{ ausentes|length }}</p>
+                <p><strong>Total de Respostas:</strong> {{ confirmados|length + ausentes|length }}</p>
+            </div>
+        </div>
+
+        <div class="lists">
+            <h2 style="color: #3B4CCA; border-bottom: 2px solid #FFDE00;">Confirmados (Vão Batalhar)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Treinador</th>
+                        <th>Acompanhante</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in confirmados %}
+                    <tr>
+                        <td>{{ p.nome }}</td>
+                        <td>{{ p.acompanhante or '-' }}</td>
+                        <td><span class="badge-sim">Confirmado</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h2 style="color: #FF0000; border-bottom: 2px solid #FFDE00; margin-top: 40px;">Ausentes (Ficarão no PC)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Treinador</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in ausentes %}
+                    <tr>
+                        <td>{{ p.nome }}</td>
+                        <td><span class="badge-nao">Ausente</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        fetch('/api/stats')
+            .then(res => res.json())
+            .then(data => {
+                const ctx = document.getElementById('statsChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Confirmados', 'Ausentes'],
+                        datasets: [{
+                            data: [data.sim, data.nao],
+                            backgroundColor: ['#FFDE00', '#FF0000'],
+                            borderColor: ['#3B4CCA', '#3B4CCA'],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { position: 'bottom' }
+                        }
+                    }
+                });
+            });
+    </script>
+</body>
+</html>

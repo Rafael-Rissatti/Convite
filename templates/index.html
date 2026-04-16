@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convite Pokémon - Eu escolho você!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="pokemon-container">
+        <div class="header">
+            <h1>Eu escolho você!</h1>
+            <p>Confirme sua presença no Centro Pokémon</p>
+        </div>
+        <div class="content">
+            <form id="rsvpForm">
+                <div class="form-group">
+                    <label for="nome">Nome Completo</label>
+                    <input type="text" id="nome" name="nome" placeholder="Seu nome de Treinador" required>
+                </div>
+                <div class="form-group">
+                    <label for="acompanhante">Acompanhante (Opcional)</label>
+                    <input type="text" id="acompanhante" name="acompanhante" placeholder="Nome do acompanhante">
+                </div>
+                <div class="form-group">
+                    <label>Vai participar da aventura?</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="sim" name="status" value="sim" required>
+                            <label for="sim">Vou batalhar na festa!</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="nao" name="status" value="nao">
+                            <label for="nao">Ficarei no PC do Bill</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit">Enviar Confirmação</button>
+            </form>
+            <div id="message"></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('rsvpForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const msgDiv = document.getElementById('message');
+            
+            try {
+                const response = await fetch('/submit', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                
+                msgDiv.textContent = result.message;
+                msgDiv.className = result.status === 'success' ? 'success' : 'error';
+                msgDiv.style.display = 'block';
+                
+                if (result.status === 'success') {
+                    e.target.reset();
+                }
+            } catch (err) {
+                msgDiv.textContent = "Erro ao conectar com o Centro Pokémon.";
+                msgDiv.className = 'error';
+                msgDiv.style.display = 'block';
+            }
+        };
+    </script>
+</body>
+</html>

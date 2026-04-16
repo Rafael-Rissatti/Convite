@@ -1,0 +1,160 @@
+body {
+    background-color: #f0f0f0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.pokemon-container {
+    background-color: white;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    border: 8px solid #3B4CCA;
+}
+
+.header {
+    background-color: #FF0000;
+    color: white;
+    padding: 30px;
+    text-align: center;
+    border-bottom: 8px solid #333;
+    position: relative;
+}
+
+.header::after {
+    content: '';
+    position: absolute;
+    bottom: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    border: 4px solid #333;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+.content {
+    padding: 40px 20px;
+}
+
+h1 { margin: 0; font-size: 24px; text-transform: uppercase; letter-spacing: 2px; }
+p { color: #555; margin-top: 10px; }
+
+.form-group { margin-bottom: 20px; }
+label { display: block; margin-bottom: 5px; font-weight: bold; color: #3B4CCA; }
+input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.radio-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.radio-option {
+    flex: 1;
+    position: relative;
+}
+
+.radio-option input {
+    display: none;
+}
+
+.radio-option label {
+    display: block;
+    padding: 15px;
+    text-align: center;
+    background-color: #eee;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+    font-size: 14px;
+}
+
+.radio-option input:checked + label {
+    background-color: #FFDE00;
+    border-color: #3B4CCA;
+    color: #3B4CCA;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    background-color: #3B4CCA;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    text-transform: uppercase;
+}
+
+button:hover { background-color: #2a3a8c; }
+
+#message {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    display: none;
+    text-align: center;
+    font-weight: bold;
+}
+
+.success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+.error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
+/* Admin Dashboard */
+.admin-container {
+    background-color: white;
+    width: 95%;
+    max-width: 1000px;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+@media (max-width: 768px) {
+    .stats-grid { grid-template-columns: 1fr; }
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+th { background-color: #3B4CCA; color: white; }
+tr:hover { background-color: #f9f9f9; }
+
+.badge-sim { background-color: #FFDE00; color: #3B4CCA; padding: 5px 10px; border-radius: 15px; font-weight: bold; font-size: 12px; }
+.badge-nao { background-color: #FF0000; color: white; padding: 5px 10px; border-radius: 15px; font-weight: bold; font-size: 12px; }

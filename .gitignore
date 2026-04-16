@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.venv
+node_modules/
+.env
+.vscode/
+.idea/
+
+# Banco de dados local
+rsvp.db
