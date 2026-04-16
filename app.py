@@ -71,6 +71,29 @@ def stats():
         "nao": count_nao
     })
 
+@app.route('/admin/delete/<int:id>', methods=['POST'])
+def delete_rsvp(id):
+    if not session.get('logged_in'):
+        return jsonify({"error": "Unauthorized"}), 401
+    
+    rsvp = RSVP.query.get_or_404(id)
+    db.session.delete(rsvp)
+    db.session.commit()
+    return redirect(url_for('admin'))
+
+@app.route('/admin/edit/<int:id>', methods=['POST'])
+def edit_rsvp(id):
+    if not session.get('logged_in'):
+        return jsonify({"error": "Unauthorized"}), 401
+    
+    rsvp = RSVP.query.get_or_404(id)
+    rsvp.nome = request.form.get('nome')
+    rsvp.acompanhante = request.form.get('acompanhante')
+    rsvp.status = request.form.get('status')
+    
+    db.session.commit()
+    return redirect(url_for('admin'))
+
 @app.route('/logout')
 def logout():
     session.pop('logged_in', None)

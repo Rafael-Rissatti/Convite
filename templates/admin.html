@@ -34,6 +34,7 @@
                         <th>Treinador</th>
                         <th>Acompanhante</th>
                         <th>Status</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,6 +43,14 @@
                         <td>{{ p.nome }}</td>
                         <td>{{ p.acompanhante or '-' }}</td>
                         <td><span class="badge-sim">Confirmado</span></td>
+                        <td>
+                            <div class="actions">
+                                <button class="btn-edit" onclick="openEditModal('{{ p.id }}', '{{ p.nome }}', '{{ p.acompanhante or '' }}', '{{ p.status }}')">Alterar</button>
+                                <form action="{{ url_for('delete_rsvp', id=p.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Expulsar este treinador da aventura?')">
+                                    <button type="submit" class="btn-delete">Excluir</button>
+                                </form>
+                            </div>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -53,6 +62,7 @@
                     <tr>
                         <th>Treinador</th>
                         <th>Status</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,6 +70,14 @@
                     <tr>
                         <td>{{ p.nome }}</td>
                         <td><span class="badge-nao">Ausente</span></td>
+                        <td>
+                            <div class="actions">
+                                <button class="btn-edit" onclick="openEditModal('{{ p.id }}', '{{ p.nome }}', '{{ p.acompanhante or '' }}', '{{ p.status }}')">Alterar</button>
+                                <form action="{{ url_for('delete_rsvp', id=p.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Expulsar este treinador da aventura?')">
+                                    <button type="submit" class="btn-delete">Excluir</button>
+                                </form>
+                            </div>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -67,7 +85,36 @@
         </div>
     </div>
 
+    <!-- Modal de Edição -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h2 style="color: #3B4CCA;">Editar Treinador</h2>
+            <form id="editForm" method="POST">
+                <div class="form-group">
+                    <label for="edit_nome">Nome</label>
+                    <input type="text" id="edit_nome" name="nome" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit_acompanhante">Acompanhante</label>
+                    <input type="text" id="edit_acompanhante" name="acompanhante">
+                </div>
+                <div class="form-group">
+                    <label for="edit_status">Status</label>
+                    <select id="edit_status" name="status" style="width: 100%; padding: 10px; border-radius: 8px;">
+                        <option value="sim">Confirmado</option>
+                        <option value="nao">Ausente</option>
+                    </select>
+                </div>
+                <div style="margin-top: 20px; display: flex; gap: 10px;">
+                    <button type="submit" class="btn-save">Salvar Alterações</button>
+                    <button type="button" class="btn-cancel" onclick="closeModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
+        // Gráfico
         fetch('/api/stats')
             .then(res => res.json())
             .then(data => {
@@ -91,6 +138,30 @@
                     }
                 });
             });
+
+        // Funções do Modal
+        function openEditModal(id, nome, acompanhante, status) {
+            const modal = document.getElementById('editModal');
+            const form = document.getElementById('editForm');
+            
+            document.getElementById('edit_nome').value = nome;
+            document.getElementById('edit_acompanhante').value = acompanhante;
+            document.getElementById('edit_status').value = status;
+            
+            form.action = '/admin/edit/' + id;
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('editModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
     </script>
 </body>
 </html>
