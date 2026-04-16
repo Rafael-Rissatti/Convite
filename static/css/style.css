@@ -1,5 +1,7 @@
+@import url('https://fonts.cdnfonts.com/css/pokemon-solid');
+
 body {
-    background-color: #f0f0f0;
+    background: linear-gradient(135deg, #000000 0%, #4b0082 100%);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     display: flex;
@@ -14,8 +16,9 @@ body {
     max-width: 500px;
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
     border: 8px solid #3B4CCA;
+    margin: 20px;
 }
 
 .header {
@@ -27,26 +30,58 @@ body {
     position: relative;
 }
 
+/* Divisor Pokébola Aprimorado */
 .header::after {
     content: '';
     position: absolute;
-    bottom: -24px;
+    bottom: -32px;
     left: 50%;
     transform: translateX(-50%);
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     background-color: white;
-    border: 4px solid #333;
+    border: 6px solid #333;
     border-radius: 50%;
     z-index: 2;
 }
 
-.content {
-    padding: 40px 20px;
+.header::before {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border: 4px solid #333;
+    border-radius: 50%;
+    z-index: 3;
 }
 
-h1 { margin: 0; font-size: 24px; text-transform: uppercase; letter-spacing: 2px; }
-p { color: #555; margin-top: 10px; }
+.content {
+    padding: 50px 20px 40px 20px;
+}
+
+h1 { 
+    margin: 0; 
+    font-size: 32px; 
+    font-family: 'Pokemon Solid', sans-serif;
+    letter-spacing: 4px;
+    color: #FFDE00;
+    -webkit-text-stroke: 1.5px #3B4CCA;
+    text-shadow: 3px 3px 0px #3B4CCA;
+}
+
+.header p { 
+    color: #FFDE00; 
+    margin-top: 15px; 
+    font-weight: 900;
+    font-size: 20px;
+    text-transform: uppercase;
+    -webkit-text-stroke: 1px #3B4CCA;
+    text-shadow: 2px 2px 0px #3B4CCA;
+}
 
 .form-group { margin-bottom: 20px; }
 label { display: block; margin-bottom: 5px; font-weight: bold; color: #3B4CCA; }
@@ -84,12 +119,14 @@ input[type="text"] {
     transition: all 0.3s;
     border: 2px solid transparent;
     font-size: 14px;
+    font-weight: bold;
 }
 
 .radio-option input:checked + label {
     background-color: #FFDE00;
     border-color: #3B4CCA;
     color: #3B4CCA;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 button {
@@ -102,11 +139,18 @@ button {
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background 0.3s, transform 0.1s;
     text-transform: uppercase;
 }
 
-button:hover { background-color: #2a3a8c; }
+button:hover { 
+    background-color: #2a3a8c;
+    transform: scale(1.02);
+}
+
+button:active {
+    transform: scale(0.98);
+}
 
 #message {
     margin-top: 20px;
