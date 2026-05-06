@@ -52,9 +52,17 @@
         </div>
     </div>
 
+    <audio id="pikachuSound" src="https://www.myinstants.com/media/sounds/pikachu.mp3"></audio>
+
     <script>
         document.getElementById('rsvpForm').onsubmit = async (e) => {
             e.preventDefault();
+            
+            // Tocar som do Pikachu
+            const sound = document.getElementById('pikachuSound');
+            sound.currentTime = 0;
+            sound.play().catch(err => console.log("Erro ao tocar som:", err));
+
             const formData = new FormData(e.target);
             const msgDiv = document.getElementById('message');
             

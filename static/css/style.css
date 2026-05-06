@@ -4,8 +4,8 @@ body {
     background: linear-gradient(135deg, 
         #4b0082 0%, 
         #4b0082 10%, 
-        #000000 25%, 
-        #000000 65%, 
+        #00ffff 25%, 
+        #00ffff 65%, 
         #4b0082 85%, 
         #4b0082 100%);
     background-attachment: fixed;
@@ -33,21 +33,21 @@ body {
 .pikachu {
     background-image: url('../pikachu1.png');
     left: 10%;
-    animation: move-up-right 12s linear infinite;
+    animation: move-up-right 3.4s linear infinite;
 }
 
 .meowth {
     background-image: url('../Miaud.png');
     left: 45%;
-    animation: move-up-left 15s linear infinite;
-    animation-delay: 3s;
+    animation: move-up-left 4.3s linear infinite;
+    animation-delay: 0.8s;
 }
 
 .psyduck {
     background-image: url('../psye.png');
     left: 80%;
-    animation: move-up-right 14s linear infinite;
-    animation-delay: 7s;
+    animation: move-up-right 4s linear infinite;
+    animation-delay: 2s;
 }
 
 @keyframes move-up-right {
