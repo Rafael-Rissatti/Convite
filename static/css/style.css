@@ -1,303 +1,366 @@
-@import url('https://fonts.cdnfonts.com/css/pokemon-solid');
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;800&display=swap');
+
+:root {
+    --poke-red: #EE1515;
+    --poke-white: #FFFFFF;
+    --poke-dark: #2B2B2B;
+    --poke-blue: #3B4CCA;
+    --poke-yellow: #FFDE00;
+    --poke-green: #4CAF50;
+    --bg-top: #A0E7E5; /* Soft Sky Blue */
+    --bg-bottom: #B4F8C8; /* Soft Grass Green */
+    --card-shadow: 0 20px 50px rgba(0,0,0,0.15);
+    --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
 
 body {
-    background: linear-gradient(135deg, 
-        #4b0082 0%, 
-        #4b0082 10%, 
-        #00ffff 25%, 
-        #00ffff 65%, 
-        #4b0082 85%, 
-        #4b0082 100%);
-    background-attachment: fixed;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Lexend', sans-serif;
     margin: 0;
+    padding: 0;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    background: linear-gradient(135deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+    background-attachment: fixed;
     overflow-x: hidden;
+    position: relative;
 }
 
-/* Animação de Pokémon Espalhados */
-.floating-pokemon {
+/* Ambientação Decorativa */
+.decoration {
     position: fixed;
-    width: 150px;
-    height: 150px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    z-index: -1;
-    opacity: 0.35;
     pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
 }
 
-.pikachu {
-    background-image: url('../pikachu1.png');
-    left: 10%;
-    animation: move-up-right 3.4s linear infinite;
+.cloud {
+    background: white;
+    width: 120px;
+    height: 45px;
+    border-radius: 50px;
+    position: absolute;
+    animation: float-cloud 25s infinite linear;
 }
 
-.meowth {
-    background-image: url('../Miaud.png');
-    left: 45%;
-    animation: move-up-left 4.3s linear infinite;
-    animation-delay: 0.8s;
+@keyframes float-cloud {
+    from { transform: translateX(-200px); }
+    to { transform: translateX(110vw); }
 }
 
-.psyduck {
-    background-image: url('../psye.png');
-    left: 80%;
-    animation: move-up-right 4s linear infinite;
-    animation-delay: 2s;
+.grass-bottom {
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    background: rgba(129, 199, 132, 0.4);
+    position: fixed;
+    z-index: 0;
 }
 
-@keyframes move-up-right {
-    0% {
-        transform: translate(-100px, 110vh) rotate(0deg);
-    }
-    100% {
-        transform: translate(100vw, -200px) rotate(360deg);
-    }
-}
-
-@keyframes move-up-left {
-    0% {
-        transform: translate(100px, 110vh) rotate(0deg);
-    }
-    100% {
-        transform: translate(-100vw, -200px) rotate(-360deg);
-    }
-}
-
-.pokemon-container {
-    background-color: white;
-    width: 90%;
-    max-width: 500px;
-    border-radius: 20px;
+/* Card Pokédex Moderna */
+.pokedex-card {
+    background: var(--poke-white);
+    width: 92%;
+    max-width: 480px;
+    border-radius: 35px;
     overflow: hidden;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-    border: 8px solid #3B4CCA;
+    box-shadow: var(--card-shadow), 0 0 0 3px var(--poke-yellow);
+    position: relative;
+    z-index: 10;
     margin: 20px;
-    position: relative;
-    z-index: 1;
+    border: 1px solid rgba(0,0,0,0.05);
 }
 
-.header {
-    background-color: #FF0000;
-    color: white;
-    padding: 30px;
+/* Header Estilo Pokédex */
+.card-header {
+    background-color: var(--poke-red);
+    padding: 50px 30px 40px;
     text-align: center;
-    border-bottom: 8px solid #333;
+    color: white;
     position: relative;
 }
 
-/* Divisor Pokébola Aprimorado */
-.header::after {
-    content: '';
-    position: absolute;
-    bottom: -32px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50px;
-    height: 50px;
-    background-color: white;
-    border: 6px solid #333;
-    border-radius: 50%;
-    z-index: 2;
+.card-header h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
-.header::before {
+.card-header p {
+    margin: 10px 0 0;
+    font-size: 16px;
+    font-weight: 300;
+    opacity: 0.95;
+}
+
+/* Divisor Pokébola Flat */
+.divider {
+    height: 14px;
+    background: var(--poke-dark);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.divider::after {
     content: '';
-    position: absolute;
-    bottom: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 20px;
-    height: 20px;
-    background-color: white;
-    border: 4px solid #333;
+    width: 54px;
+    height: 54px;
+    background: white;
+    border: 10px solid var(--poke-dark);
     border-radius: 50%;
+    position: absolute;
+    z-index: 2;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+}
+
+.divider::before {
+    content: '';
+    width: 18px;
+    height: 18px;
+    background: var(--poke-yellow);
+    border: 3px solid var(--poke-dark);
+    border-radius: 50%;
+    position: absolute;
     z-index: 3;
 }
 
-.content {
-    padding: 50px 20px 40px 20px;
+/* Corpo do Formulário */
+.card-body {
+    padding: 50px 35px 40px;
 }
 
-h1 { 
-    margin: 0; 
-    font-size: 32px; 
-    font-family: 'Pokemon Solid', sans-serif;
-    letter-spacing: 4px;
-    color: #FFDE00;
-    -webkit-text-stroke: 1.5px #000000;
-    text-shadow: 3px 3px 0px #000000;
+.form-group {
+    margin-bottom: 28px;
 }
 
-.header p { 
-    color: #FFDE00; 
-    margin-top: 15px; 
-    font-weight: 900;
-    font-size: 22px;
-    text-transform: uppercase;
-    -webkit-text-stroke: 1.2px #000000;
-    text-shadow: 2px 2px 0px #000000;
-}
-
-.form-group { margin-bottom: 20px; }
-label { display: block; margin-bottom: 5px; font-weight: bold; color: #3B4CCA; }
-input[type="text"] {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    box-sizing: border-box;
-    font-size: 16px;
-}
-
-.radio-group {
+.form-group label {
     display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 10px;
+    color: var(--poke-dark);
+}
+
+.form-group label span {
+    font-size: 18px;
+}
+
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 16px 20px;
+    border: 2.5px solid #eee;
+    border-radius: 16px;
+    font-family: inherit;
+    font-size: 15px;
+    transition: var(--transition);
+    outline: none;
+    background: #fafafa;
+}
+
+input[type="text"]:focus, input[type="password"]:focus {
+    border-color: var(--poke-blue);
+    background: white;
+    box-shadow: 0 0 0 5px rgba(59, 76, 202, 0.1);
+}
+
+/* Seleção de Aventura (Botões Grandes) */
+.radio-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 15px;
     margin-top: 10px;
 }
 
 .radio-option {
-    flex: 1;
     position: relative;
 }
 
 .radio-option input {
-    display: none;
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
 }
 
 .radio-option label {
-    display: block;
-    padding: 15px;
-    text-align: center;
-    background-color: #eee;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 15px;
+    background: #f8f8f8;
     border: 2px solid transparent;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: var(--transition);
+    text-align: center;
+    height: 100%;
+    margin: 0 !important;
+}
+
+.radio-option label strong {
+    display: block;
     font-size: 14px;
-    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.radio-option label span {
+    font-size: 11px;
+    font-weight: 400;
+    opacity: 0.7;
 }
 
 .radio-option input:checked + label {
-    background-color: #FFDE00;
-    border-color: #3B4CCA;
-    color: #3B4CCA;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background: rgba(59, 76, 202, 0.05);
+    border-color: var(--poke-blue);
+    color: var(--poke-blue);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(59, 76, 202, 0.1);
 }
 
+/* Botão Principal */
 button {
     width: 100%;
-    padding: 15px;
-    background-color: #3B4CCA;
+    padding: 18px;
+    background: var(--poke-blue);
     color: white;
     border: none;
-    border-radius: 8px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s, transform 0.1s;
-    text-transform: uppercase;
-}
-
-button:hover { 
-    background-color: #2a3a8c;
-    transform: scale(1.02);
-}
-
-#message {
-    margin-top: 20px;
-    padding: 15px;
-    border-radius: 8px;
-    display: none;
-    text-align: center;
-    font-weight: bold;
-}
-
-.success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-.error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-
-/* Admin Dashboard */
-.admin-container {
-    background-color: white;
-    width: 95%;
-    max-width: 1000px;
-    padding: 30px;
     border-radius: 20px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    font-size: 16px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 8px 20px rgba(59, 76, 202, 0.25);
+}
+
+button:hover {
+    transform: scale(1.03);
+    background: #2a3a8c;
+    box-shadow: 0 10px 25px rgba(59, 76, 202, 0.35);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+/* Feedback de Mensagem */
+#message {
+    margin-top: 25px;
+    padding: 15px;
+    border-radius: 15px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.success { background: #e8f5e9; color: #2e7d32; }
+.error { background: #ffebee; color: #c62828; }
+
+/* Admin Dashboard Specifics */
+.admin-container {
+    background: var(--poke-white);
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: var(--card-shadow);
+    max-width: 1000px;
+    width: 95%;
+    z-index: 10;
 }
 
 .stats-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 30px;
-    margin-bottom: 40px;
+    margin: 30px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th {
+    background: var(--poke-blue);
+    color: white;
+    padding: 15px;
+    text-align: left;
+    border-radius: 10px 10px 0 0;
+}
+
+td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.badge-sim { background: var(--poke-yellow); color: var(--poke-blue); padding: 5px 12px; border-radius: 20px; font-weight: bold; font-size: 12px; }
+.badge-nao { background: var(--poke-red); color: white; padding: 5px 12px; border-radius: 20px; font-weight: bold; font-size: 12px; }
+
+.btn-edit { background: var(--poke-yellow); color: var(--poke-blue); padding: 8px 15px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; }
+.btn-delete { background: var(--poke-red); color: white; padding: 8px 15px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; }
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: white;
+    margin: 10% auto;
+    padding: 40px;
+    border-radius: 30px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: var(--card-shadow);
+}
+
+/* Login Box Specifics */
+.login-box {
+    background: white;
+    padding: 50px 40px;
+    border-radius: 30px;
+    box-shadow: var(--card-shadow), 0 0 0 4px var(--poke-yellow);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    z-index: 10;
 }
 
 @media (max-width: 768px) {
     .stats-grid { grid-template-columns: 1fr; }
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-}
-
-th, td {
-    text-align: left;
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-}
-
-th { background-color: #3B4CCA; color: white; }
-tr:hover { background-color: #f9f9f9; }
-
-.badge-sim { background-color: #FFDE00; color: #3B4CCA; padding: 5px 10px; border-radius: 15px; font-weight: bold; font-size: 12px; }
-.badge-nao { background-color: #FF0000; color: white; padding: 5px 10px; border-radius: 15px; font-weight: bold; font-size: 12px; }
-
-/* Botões de Ação no Admin */
-.actions {
-    display: flex;
-    gap: 5px;
-}
-
-.btn-edit, .btn-delete, .btn-save, .btn-cancel {
-    padding: 6px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    border: none;
-    font-size: 12px;
-}
-
-.btn-edit { background-color: #FFDE00; color: #3B4CCA; }
-.btn-delete { background-color: #FF0000; color: white; }
-.btn-save { background-color: #3B4CCA; color: white; font-size: 14px; padding: 10px 20px; }
-.btn-cancel { background-color: #ccc; color: #333; font-size: 14px; padding: 10px 20px; }
-
-/* Modal Styles */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 10;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-}
-
-.modal-content {
-    background-color: white;
-    margin: 10% auto;
-    padding: 30px;
-    border: 4px solid #3B4CCA;
-    width: 90%;
-    max-width: 400px;
-    border-radius: 20px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+@media (max-width: 480px) {
+    .card-body { padding: 45px 25px 35px; }
+    .card-header h1 { font-size: 26px; }
+    .radio-grid { grid-template-columns: 1fr; }
 }
