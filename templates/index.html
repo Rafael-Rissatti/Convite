@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -7,89 +6,88 @@
     <title>Convite Pokémon - Eu escolho você!</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
-    <!-- Ambientação -->
-    <div class="decoration cloud" style="top: 15%; animation-delay: 0s;"></div>
-    <div class="decoration cloud" style="top: 40%; animation-delay: -8s; opacity: 0.6; width: 150px;"></div>
-    <div class="decoration cloud" style="top: 70%; animation-delay: -15s; width: 90px;"></div>
+<body class="invite-page">
+    <div class="sky-badge badge-one"></div>
+    <div class="sky-badge badge-two"></div>
+    <div class="sky-badge badge-three"></div>
     <div class="grass-bottom"></div>
+
+    <img class="pokemon-friend pikachu" src="{{ url_for('static', filename='pikachu1.png') }}" alt="Pikachu animado">
+    <img class="pokemon-friend psyduck" src="{{ url_for('static', filename='psye.png') }}" alt="Psyduck animado">
+    <img class="pokemon-friend meowth" src="{{ url_for('static', filename='Miaud.png') }}" alt="Meowth animado">
 
     <div class="pokedex-card">
         <header class="card-header">
+            <div class="trainer-chip">Convite de treinador</div>
             <h1>Eu escolho você!</h1>
-            <p>Confirme sua presença no Centro Pokémon</p>
+            <p>Prepare sua Pokébola e confirme presença para entrar nessa aventura.</p>
         </header>
 
-        <div class="divider"></div>
+        <div class="divider" aria-hidden="true"></div>
 
         <main class="card-body">
             <form id="rsvpForm">
-                <!-- Nome -->
                 <div class="form-group">
-                    <label for="nome"><span>🎒</span> Treinador(a)</label>
-                    <input type="text" id="nome" name="nome" placeholder="Seu nome de Treinador" required>
+                    <label for="nome"><span class="label-icon pokeball-mini"></span>Treinador(a)</label>
+                    <input type="text" id="nome" name="nome" placeholder="Seu nome de treinador" required>
                 </div>
 
-                <!-- Acompanhante -->
                 <div class="form-group">
-                    <label for="acompanhante"><span>🤝</span> Acompanhante</label>
-                    <input type="text" id="acompanhante" name="acompanhante" placeholder="Nome do seu parceiro de jornada">
+                    <label for="acompanhante"><span class="label-icon lightning-mini"></span>Parceiro de jornada</label>
+                    <input type="text" id="acompanhante" name="acompanhante" placeholder="Nome do acompanhante">
                 </div>
 
-                <!-- Status -->
                 <div class="form-group">
-                    <label><span>⚔️</span> Vai participar da aventura?</label>
+                    <label><span class="label-icon badge-mini"></span>Vai participar da aventura?</label>
                     <div class="radio-grid">
                         <div class="radio-option">
                             <input type="radio" id="sim" name="status" value="sim" required>
                             <label for="sim">
-                                <strong>VOU BATALHAR</strong>
-                                <span>na festa!</span>
+                                <strong>Vou batalhar</strong>
+                                <span>presença confirmada</span>
                             </label>
                         </div>
                         <div class="radio-option">
                             <input type="radio" id="nao" name="status" value="nao">
                             <label for="nao">
-                                <strong>ESTOU SEM HP</strong>
-                                <span>não irei</span>
+                                <strong>Estou sem HP</strong>
+                                <span>não poderei ir</span>
                             </label>
                         </div>
                     </div>
                 </div>
 
-                <button type="submit" class="btn-confirm">Enviar Confirmação</button>
+                <button type="submit" class="btn-confirm">Enviar confirmação</button>
             </form>
 
             <div id="message"></div>
         </main>
     </div>
 
-    <!-- Áudio -->
     <audio id="pikachuSound" src="https://www.myinstants.com/media/sounds/pikachu.mp3"></audio>
 
     <script>
         document.getElementById('rsvpForm').onsubmit = async (e) => {
             e.preventDefault();
-            
-            // Som do Pikachu
+
             const sound = document.getElementById('pikachuSound');
             sound.currentTime = 0;
-            sound.play().catch(err => console.log("Permissão de áudio necessária"));
+            sound.play().catch(() => console.log("Permissão de áudio necessária"));
 
             const formData = new FormData(e.target);
             const msgDiv = document.getElementById('message');
-            
+
             try {
                 const response = await fetch('/submit', {
                     method: 'POST',
                     body: formData
                 });
                 const result = await response.json();
-                
+
                 msgDiv.textContent = result.message;
                 msgDiv.className = result.status === 'success' ? 'success' : 'error';
                 msgDiv.style.display = 'block';
-                
+
                 if (result.status === 'success') {
                     e.target.reset();
                 }
