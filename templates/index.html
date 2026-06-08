@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Convite Pokémon - Eu escolho você!</title>
+    <link rel="preload" href="{{ url_for('static', filename='sound/theme.mp3') }}" as="audio" type="audio/mpeg">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body class="invite-page">
@@ -15,9 +16,11 @@
     <img class="pokemon-friend pikachu" src="{{ url_for('static', filename='pikachu1.png') }}" alt="Pikachu animado">
     <img class="pokemon-friend psyduck" src="{{ url_for('static', filename='psye.png') }}" alt="Psyduck animado">
     <img class="pokemon-friend meowth" src="{{ url_for('static', filename='Miaud.png') }}" alt="Meowth animado">
-    <img class="pokemon-friend gengar" src="{{ url_for('static', filename='image/png-transparent-gengar-funny-monster-thumbnail.png') }}" alt="Gengar animado">
-    <img class="pokemon-friend ghost-team" src="{{ url_for('static', filename='image/png-transparent-pikachu-gastly-pokemon-haunter-gengar-pikachu-purple-violet-cartoon-thumbnail.png') }}" alt="Pokémon fantasmas animados">
-    <img class="pokemon-friend charmander" src="{{ url_for('static', filename='image/png-transparent-pokemon-charmander-pokemon-go-pikachu-ash-ketchum-charmander-pokemon-orange-fictional-character-cartoon-thumbnail.png') }}" alt="Charmander animado">
+    <img class="pokemon-friend bulba" src="{{ url_for('static', filename='image/bulba.png') }}" alt="Bulbasaur animado">
+    <img class="pokemon-friend gastly" src="{{ url_for('static', filename='image/gastly.png') }}" alt="Gastly animado">
+    <img class="pokemon-friend gengar" src="{{ url_for('static', filename='image/gengar.png') }}" alt="Gengar animado">
+    <img class="pokemon-friend charmander" src="{{ url_for('static', filename='image/charmander.png') }}" alt="Charmander animado">
+    <img class="pokemon-friend squirtle" src="{{ url_for('static', filename='image/squirtle.png') }}" alt="Squirtle animado">
 
     <div class="pokedex-card">
         <header class="card-header">
@@ -95,7 +98,7 @@
             confirmSound.play().catch(() => console.log("Permissão de áudio necessária"));
         }
 
-        window.addEventListener('load', playThemeSound);
+        playThemeSound();
         confirmOption.addEventListener('click', playConfirmSound);
 
         document.getElementById('rsvpForm').onsubmit = async (e) => {

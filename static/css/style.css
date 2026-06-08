@@ -144,28 +144,44 @@ body {
     animation: wiggle 4s ease-in-out infinite;
 }
 
-.gengar {
-    width: clamp(92px, 12vw, 150px);
-    left: max(10px, calc(50vw - 650px));
-    top: 112px;
-    opacity: 0.82;
-    animation: bob 4s ease-in-out -0.8s infinite;
+.bulba {
+    width: clamp(112px, 15vw, 210px);
+    left: max(42px, calc(50vw - 665px));
+    bottom: 126px;
+    opacity: 0.86;
+    animation: bob 3.9s ease-in-out -1.5s infinite;
 }
 
-.ghost-team {
-    width: clamp(120px, 17vw, 230px);
-    right: max(24px, calc(50vw - 680px));
-    top: 210px;
+.gastly {
+    width: clamp(76px, 10vw, 128px);
+    left: max(18px, calc(50vw - 640px));
+    top: 132px;
     opacity: 0.74;
-    animation: drift-ghost 5.6s ease-in-out infinite;
+    animation: drift-ghost 5.2s ease-in-out infinite;
+}
+
+.gengar {
+    width: clamp(96px, 12vw, 168px);
+    right: max(28px, calc(50vw - 690px));
+    top: 150px;
+    opacity: 0.78;
+    animation: drift-ghost 5.8s ease-in-out -1.1s infinite;
 }
 
 .charmander {
-    width: clamp(105px, 15vw, 190px);
-    left: max(70px, calc(50vw - 620px));
-    bottom: 130px;
+    width: clamp(104px, 14vw, 184px);
+    left: max(110px, calc(50vw - 545px));
+    bottom: 58px;
     opacity: 0.9;
     animation: bob 3.8s ease-in-out -1.8s infinite;
+}
+
+.squirtle {
+    width: clamp(92px, 12vw, 154px);
+    right: max(112px, calc(50vw - 555px));
+    bottom: 106px;
+    opacity: 0.86;
+    animation: bob 3.6s ease-in-out -0.4s infinite;
 }
 
 @keyframes bob {
@@ -577,25 +593,37 @@ td {
 
     .pikachu,
     .psyduck,
+    .bulba,
+    .gastly,
     .gengar,
-    .ghost-team,
-    .charmander {
+    .charmander,
+    .squirtle {
         opacity: 0.52;
     }
 
-    .gengar {
-        left: 6px;
-        top: 92px;
+    .bulba {
+        left: -30px;
+        bottom: 126px;
     }
 
-    .ghost-team {
-        right: -26px;
-        top: 190px;
+    .gastly {
+        left: 8px;
+        top: 104px;
+    }
+
+    .gengar {
+        right: -24px;
+        top: 136px;
+    }
+
+    .squirtle {
+        right: -12px;
+        bottom: 116px;
     }
 
     .charmander {
-        left: -14px;
-        bottom: 118px;
+        left: 22px;
+        bottom: 44px;
     }
 }
 
@@ -646,8 +674,10 @@ td {
         display: none;
     }
 
+    .bulba,
+    .gastly,
     .gengar,
-    .ghost-team {
+    .squirtle {
         display: none;
     }
 
