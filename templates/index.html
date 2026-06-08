@@ -15,6 +15,9 @@
     <img class="pokemon-friend pikachu" src="{{ url_for('static', filename='pikachu1.png') }}" alt="Pikachu animado">
     <img class="pokemon-friend psyduck" src="{{ url_for('static', filename='psye.png') }}" alt="Psyduck animado">
     <img class="pokemon-friend meowth" src="{{ url_for('static', filename='Miaud.png') }}" alt="Meowth animado">
+    <img class="pokemon-friend gengar" src="{{ url_for('static', filename='image/png-transparent-gengar-funny-monster-thumbnail.png') }}" alt="Gengar animado">
+    <img class="pokemon-friend ghost-team" src="{{ url_for('static', filename='image/png-transparent-pikachu-gastly-pokemon-haunter-gengar-pikachu-purple-violet-cartoon-thumbnail.png') }}" alt="Pokémon fantasmas animados">
+    <img class="pokemon-friend charmander" src="{{ url_for('static', filename='image/png-transparent-pokemon-charmander-pokemon-go-pikachu-ash-ketchum-charmander-pokemon-orange-fictional-character-cartoon-thumbnail.png') }}" alt="Charmander animado">
 
     <div class="pokedex-card">
         <header class="card-header">
@@ -64,15 +67,39 @@
         </main>
     </div>
 
-    <audio id="pikachuSound" src="https://www.myinstants.com/media/sounds/pikachu.mp3"></audio>
+    <audio id="themeSound" src="{{ url_for('static', filename='sound/theme.mp3') }}" preload="auto" loop></audio>
+    <audio id="confirmSound" src="{{ url_for('static', filename='sound/confirmar.mp3') }}" preload="auto"></audio>
 
     <script>
+        const confirmOption = document.getElementById('sim');
+        const confirmSound = document.getElementById('confirmSound');
+        const themeSound = document.getElementById('themeSound');
+
+        themeSound.volume = 0.35;
+
+        function playThemeSound() {
+            themeSound.play().catch(() => {
+                const unlockTheme = () => {
+                    themeSound.play().catch(() => console.log("Permissão de áudio necessária"));
+                    document.removeEventListener('click', unlockTheme);
+                    document.removeEventListener('touchstart', unlockTheme);
+                };
+
+                document.addEventListener('click', unlockTheme);
+                document.addEventListener('touchstart', unlockTheme);
+            });
+        }
+
+        function playConfirmSound() {
+            confirmSound.currentTime = 0;
+            confirmSound.play().catch(() => console.log("Permissão de áudio necessária"));
+        }
+
+        window.addEventListener('load', playThemeSound);
+        confirmOption.addEventListener('click', playConfirmSound);
+
         document.getElementById('rsvpForm').onsubmit = async (e) => {
             e.preventDefault();
-
-            const sound = document.getElementById('pikachuSound');
-            sound.currentTime = 0;
-            sound.play().catch(() => console.log("Permissão de áudio necessária"));
 
             const formData = new FormData(e.target);
             const msgDiv = document.getElementById('message');

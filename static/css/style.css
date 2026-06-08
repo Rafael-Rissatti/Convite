@@ -144,9 +144,38 @@ body {
     animation: wiggle 4s ease-in-out infinite;
 }
 
+.gengar {
+    width: clamp(92px, 12vw, 150px);
+    left: max(10px, calc(50vw - 650px));
+    top: 112px;
+    opacity: 0.82;
+    animation: bob 4s ease-in-out -0.8s infinite;
+}
+
+.ghost-team {
+    width: clamp(120px, 17vw, 230px);
+    right: max(24px, calc(50vw - 680px));
+    top: 210px;
+    opacity: 0.74;
+    animation: drift-ghost 5.6s ease-in-out infinite;
+}
+
+.charmander {
+    width: clamp(105px, 15vw, 190px);
+    left: max(70px, calc(50vw - 620px));
+    bottom: 130px;
+    opacity: 0.9;
+    animation: bob 3.8s ease-in-out -1.8s infinite;
+}
+
 @keyframes bob {
     0%, 100% { translate: 0 0; }
     50% { translate: 0 -10px; }
+}
+
+@keyframes drift-ghost {
+    0%, 100% { translate: 0 0; rotate: -3deg; }
+    50% { translate: 0 -12px; rotate: 3deg; }
 }
 
 @keyframes wiggle {
@@ -547,8 +576,26 @@ td {
     }
 
     .pikachu,
-    .psyduck {
+    .psyduck,
+    .gengar,
+    .ghost-team,
+    .charmander {
         opacity: 0.52;
+    }
+
+    .gengar {
+        left: 6px;
+        top: 92px;
+    }
+
+    .ghost-team {
+        right: -26px;
+        top: 190px;
+    }
+
+    .charmander {
+        left: -14px;
+        bottom: 118px;
     }
 }
 
@@ -597,5 +644,18 @@ td {
 
     .meowth {
         display: none;
+    }
+
+    .gengar,
+    .ghost-team {
+        display: none;
+    }
+
+    .charmander {
+        width: 102px;
+        left: auto;
+        right: -24px;
+        bottom: 132px;
+        opacity: 0.44;
     }
 }
