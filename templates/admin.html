@@ -13,6 +13,11 @@
             <h1 style="color: #3B4CCA;">Pokédex de Convidados</h1>
             <a href="/logout" style="color: #FF0000; font-weight: bold; text-decoration: none;">Sair</a>
         </div>
+
+        <div class="admin-export-actions">
+            <a class="btn-export btn-export-pdf" href="{{ url_for('export_pdf') }}">Baixar PDF</a>
+            <a class="btn-export btn-export-excel" href="{{ url_for('export_excel') }}">Baixar Excel</a>
+        </div>
         
         <div class="stats-grid">
             <div style="max-width: 400px; margin: 0 auto;">
