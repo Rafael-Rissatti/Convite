@@ -292,6 +292,38 @@ body {
     text-shadow: 0 2px 0 rgba(31, 34, 48, 0.28);
 }
 
+.map-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    min-height: 32px;
+    margin: 12px auto 0;
+    padding: 7px 13px;
+    border: 2px solid var(--poke-ink);
+    border-radius: 999px;
+    background: var(--poke-blue);
+    color: var(--poke-white);
+    font-size: 12px;
+    font-weight: 900;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.18);
+    transition: var(--transition);
+}
+
+.map-link:hover {
+    translate: 0 -2px;
+    background: var(--poke-blue-dark);
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
+}
+
+.map-link:active {
+    translate: 0 2px;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
+}
+
 .response-deadline {
     display: inline-flex;
     align-items: center;
