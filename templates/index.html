@@ -81,7 +81,7 @@
         <span class="audio-icon" aria-hidden="true"></span>
     </button>
 
-    <audio id="themeSound" src="{{ url_for('static', filename='sound/theme.mp3') }}" preload="auto" loop></audio>
+    <audio id="themeSound" src="{{ url_for('static', filename='sound/theme.mp3') }}" preload="auto" autoplay loop></audio>
     <audio id="confirmSound" src="{{ url_for('static', filename='sound/confirmar.mp3') }}" preload="auto"></audio>
 
     <script>
@@ -91,7 +91,7 @@
         const audioToggle = document.getElementById('audioToggle');
         let themeBlocked = false;
 
-        themeSound.volume = 0.35;
+        themeSound.volume = 0.21;
 
         function removeAutoplayFallback() {
             document.removeEventListener('pointerdown', unlockThemeSound);
@@ -147,6 +147,9 @@
             }
         });
         playThemeSound();
+        document.addEventListener('DOMContentLoaded', playThemeSound);
+        window.addEventListener('pageshow', playThemeSound);
+        themeSound.addEventListener('canplaythrough', playThemeSound, { once: true });
         confirmOption.addEventListener('click', playConfirmSound);
 
         document.getElementById('rsvpForm').onsubmit = async (e) => {
