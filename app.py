@@ -5,13 +5,6 @@ from xml.sax.saxutils import escape
 
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, send_file
 from flask_sqlalchemy import SQLAlchemy
-from openpyxl import Workbook
-from openpyxl.styles import Alignment, Font, PatternFill
-from openpyxl.utils import get_column_letter
-from reportlab.lib import colors
-from reportlab.lib.pagesizes import A4, landscape
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'pokemon_secret_key'
@@ -108,6 +101,13 @@ def export_excel():
     if not admin_required():
         return redirect(url_for('login'))
 
+    try:
+        from openpyxl import Workbook
+        from openpyxl.styles import Alignment, Font, PatternFill
+        from openpyxl.utils import get_column_letter
+    except ImportError:
+        return "Dependência openpyxl não instalada. Execute: pip install -r requirements.txt", 500
+
     rows = get_rsvp_rows()
     workbook = Workbook()
     sheet = workbook.active
@@ -162,6 +162,14 @@ def export_excel():
 def export_pdf():
     if not admin_required():
         return redirect(url_for('login'))
+
+    try:
+        from reportlab.lib import colors
+        from reportlab.lib.pagesizes import A4, landscape
+        from reportlab.lib.styles import getSampleStyleSheet
+        from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
+    except ImportError:
+        return "Dependência reportlab não instalada. Execute: pip install -r requirements.txt", 500
 
     rows = get_rsvp_rows()
     output = BytesIO()
