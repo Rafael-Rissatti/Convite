@@ -114,73 +114,86 @@ body {
     z-index: 1;
 }
 
-.pokemon-friend {
+.pokemon-stage {
     position: fixed;
-    z-index: 2;
+    inset: 0;
+    display: grid;
+    grid-template-columns: minmax(96px, 1fr) minmax(540px, 620px) minmax(96px, 1fr);
+    gap: clamp(18px, 3vw, 52px);
+    padding: clamp(18px, 4vh, 48px) clamp(14px, 3vw, 44px) 58px;
     pointer-events: none;
+    z-index: 2;
+}
+
+.pokemon-side {
+    display: grid;
+    min-width: 0;
+    height: calc(100vh - 106px);
+    align-items: center;
+    justify-items: center;
+    align-content: space-evenly;
+}
+
+.pokemon-side-left {
+    grid-column: 1;
+}
+
+.pokemon-side-right {
+    grid-column: 3;
+}
+
+.pokemon-friend {
+    display: block;
+    max-width: min(72%, 190px);
+    max-height: 24vh;
+    object-fit: contain;
     filter: drop-shadow(0 16px 18px rgba(28, 34, 52, 0.24));
     user-select: none;
 }
 
 .pikachu {
-    width: clamp(120px, 18vw, 210px);
-    left: max(18px, calc(50vw - 490px));
-    bottom: 36px;
+    width: clamp(112px, 14vw, 198px);
     animation: bob 3.2s ease-in-out infinite;
 }
 
 .psyduck {
-    width: clamp(110px, 18vw, 220px);
-    right: max(8px, calc(50vw - 520px));
-    bottom: 22px;
+    width: clamp(112px, 14vw, 198px);
     animation: bob 3.5s ease-in-out -1.2s infinite;
 }
 
 .meowth {
-    width: clamp(90px, 13vw, 160px);
-    right: max(58px, calc(50vw - 390px));
-    top: 32px;
+    width: clamp(82px, 10vw, 142px);
     transform: rotate(7deg);
     animation: wiggle 4s ease-in-out infinite;
 }
 
 .bulba {
-    width: clamp(112px, 15vw, 210px);
-    left: max(42px, calc(50vw - 665px));
-    bottom: 126px;
-    opacity: 0.86;
+    width: clamp(118px, 15vw, 206px);
+    opacity: 0.9;
     animation: bob 3.9s ease-in-out -1.5s infinite;
 }
 
 .gastly {
-    width: clamp(76px, 10vw, 128px);
-    left: max(18px, calc(50vw - 640px));
-    top: 132px;
-    opacity: 0.74;
+    width: clamp(72px, 9vw, 122px);
+    opacity: 0.76;
     animation: drift-ghost 5.2s ease-in-out infinite;
 }
 
 .gengar {
-    width: clamp(96px, 12vw, 168px);
-    right: max(28px, calc(50vw - 690px));
-    top: 150px;
-    opacity: 0.78;
+    width: clamp(94px, 12vw, 164px);
+    opacity: 0.8;
     animation: drift-ghost 5.8s ease-in-out -1.1s infinite;
 }
 
 .charmander {
-    width: clamp(104px, 14vw, 184px);
-    left: max(110px, calc(50vw - 545px));
-    bottom: 58px;
-    opacity: 0.9;
+    width: clamp(104px, 13vw, 178px);
+    opacity: 0.92;
     animation: bob 3.8s ease-in-out -1.8s infinite;
 }
 
 .squirtle {
-    width: clamp(92px, 12vw, 154px);
-    right: max(112px, calc(50vw - 555px));
-    bottom: 106px;
-    opacity: 0.86;
+    width: clamp(92px, 11vw, 150px);
+    opacity: 0.88;
     animation: bob 3.6s ease-in-out -0.4s infinite;
 }
 
@@ -269,6 +282,24 @@ body {
     font-size: 15px;
     line-height: 1.45;
     font-weight: 600;
+}
+
+.response-deadline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    min-height: 28px;
+    margin-top: 16px;
+    padding: 6px 12px;
+    border: 2px solid var(--poke-ink);
+    border-radius: 999px;
+    background: var(--poke-white);
+    color: var(--poke-red-dark);
+    font-size: 12px;
+    font-weight: 900;
+    overflow-wrap: anywhere;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.18);
 }
 
 .divider {
@@ -479,6 +510,70 @@ button:active {
     box-shadow: 0 4px 0 var(--poke-ink);
 }
 
+.audio-toggle {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 20;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    min-width: 46px;
+    height: 46px;
+    min-height: 46px;
+    padding: 0;
+    border-width: 3px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--poke-blue-dark);
+    box-shadow: 0 5px 0 var(--poke-ink), 0 10px 26px rgba(31, 34, 48, 0.18);
+    backdrop-filter: blur(6px);
+}
+
+.audio-toggle:hover {
+    background: var(--poke-yellow);
+    box-shadow: 0 7px 0 var(--poke-ink), 0 12px 30px rgba(31, 34, 48, 0.2);
+}
+
+.audio-toggle:active {
+    translate: 0 3px;
+    box-shadow: 0 2px 0 var(--poke-ink), 0 8px 20px rgba(31, 34, 48, 0.18);
+}
+
+.audio-icon {
+    position: relative;
+    width: 18px;
+    height: 18px;
+}
+
+.audio-icon::before {
+    content: '';
+    position: absolute;
+    inset: 2px 3px;
+    border-style: solid;
+    border-width: 7px 0 7px 12px;
+    border-color: transparent transparent transparent currentColor;
+}
+
+.audio-toggle.is-playing .audio-icon::before,
+.audio-toggle.is-playing .audio-icon::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    width: 5px;
+    height: 14px;
+    border: 0;
+    background: currentColor;
+}
+
+.audio-toggle.is-playing .audio-icon::before {
+    left: 4px;
+}
+
+.audio-toggle.is-playing .audio-icon::after {
+    right: 4px;
+}
+
 #message {
     display: none;
     margin-top: 22px;
@@ -585,45 +680,16 @@ td {
 }
 
 @media (max-width: 980px) {
-    .meowth {
-        opacity: 0.42;
-        right: 12px;
-        top: 10px;
+    .pokemon-stage {
+        grid-template-columns: minmax(58px, 1fr) minmax(500px, 560px) minmax(58px, 1fr);
+        gap: 12px;
+        padding-inline: 8px;
     }
 
-    .pikachu,
-    .psyduck,
-    .bulba,
-    .gastly,
-    .gengar,
-    .charmander,
-    .squirtle {
-        opacity: 0.52;
-    }
-
-    .bulba {
-        left: -30px;
-        bottom: 126px;
-    }
-
-    .gastly {
-        left: 8px;
-        top: 104px;
-    }
-
-    .gengar {
-        right: -24px;
-        top: 136px;
-    }
-
-    .squirtle {
-        right: -12px;
-        bottom: 116px;
-    }
-
-    .charmander {
-        left: 22px;
-        bottom: 44px;
+    .pokemon-friend {
+        max-width: min(82%, 138px);
+        max-height: 20vh;
+        opacity: 0.58;
     }
 }
 
@@ -635,6 +701,10 @@ td {
     .invite-page {
         align-items: flex-start;
         padding-top: 22px;
+    }
+
+    .pokemon-stage {
+        display: none;
     }
 
     .pokedex-card {
@@ -658,34 +728,12 @@ td {
         min-height: 96px;
     }
 
-    .pikachu {
-        width: 106px;
-        left: -18px;
-        bottom: 26px;
-    }
-
-    .psyduck {
-        width: 118px;
-        right: -34px;
-        bottom: 20px;
-    }
-
-    .meowth {
-        display: none;
-    }
-
-    .bulba,
-    .gastly,
-    .gengar,
-    .squirtle {
-        display: none;
-    }
-
-    .charmander {
-        width: 102px;
-        left: auto;
-        right: -24px;
-        bottom: 132px;
-        opacity: 0.44;
+    .audio-toggle {
+        right: 12px;
+        bottom: 12px;
+        width: 42px;
+        min-width: 42px;
+        height: 42px;
+        min-height: 42px;
     }
 }

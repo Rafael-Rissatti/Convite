@@ -13,20 +13,27 @@
     <div class="sky-badge badge-three"></div>
     <div class="grass-bottom"></div>
 
-    <img class="pokemon-friend pikachu" src="{{ url_for('static', filename='pikachu1.png') }}" alt="Pikachu animado">
-    <img class="pokemon-friend psyduck" src="{{ url_for('static', filename='psye.png') }}" alt="Psyduck animado">
-    <img class="pokemon-friend meowth" src="{{ url_for('static', filename='Miaud.png') }}" alt="Meowth animado">
-    <img class="pokemon-friend bulba" src="{{ url_for('static', filename='image/bulba.png') }}" alt="Bulbasaur animado">
-    <img class="pokemon-friend gastly" src="{{ url_for('static', filename='image/gastly.png') }}" alt="Gastly animado">
-    <img class="pokemon-friend gengar" src="{{ url_for('static', filename='image/gengar.png') }}" alt="Gengar animado">
-    <img class="pokemon-friend charmander" src="{{ url_for('static', filename='image/charmander.png') }}" alt="Charmander animado">
-    <img class="pokemon-friend squirtle" src="{{ url_for('static', filename='image/squirtle.png') }}" alt="Squirtle animado">
+    <div class="pokemon-stage" aria-hidden="true">
+        <div class="pokemon-side pokemon-side-left">
+            <img class="pokemon-friend gastly" src="{{ url_for('static', filename='image/gastly.png') }}" alt="">
+            <img class="pokemon-friend bulba" src="{{ url_for('static', filename='image/bulba.png') }}" alt="">
+            <img class="pokemon-friend pikachu" src="{{ url_for('static', filename='pikachu1.png') }}" alt="">
+            <img class="pokemon-friend charmander" src="{{ url_for('static', filename='image/charmander.png') }}" alt="">
+        </div>
+        <div class="pokemon-side pokemon-side-right">
+            <img class="pokemon-friend meowth" src="{{ url_for('static', filename='Miaud.png') }}" alt="">
+            <img class="pokemon-friend gengar" src="{{ url_for('static', filename='image/gengar.png') }}" alt="">
+            <img class="pokemon-friend squirtle" src="{{ url_for('static', filename='image/squirtle.png') }}" alt="">
+            <img class="pokemon-friend psyduck" src="{{ url_for('static', filename='psye.png') }}" alt="">
+        </div>
+    </div>
 
     <div class="pokedex-card">
         <header class="card-header">
             <div class="trainer-chip">Convite de treinador</div>
             <h1>Eu escolho você!</h1>
             <p>Prepare sua Pokébola e confirme presença para entrar nessa aventura.</p>
+            <div class="response-deadline">ResponderAté16/06/2026</div>
         </header>
 
         <div class="divider" aria-hidden="true"></div>
@@ -70,6 +77,10 @@
         </main>
     </div>
 
+    <button type="button" class="audio-toggle" id="audioToggle" aria-label="Tocar música de fundo" aria-pressed="false">
+        <span class="audio-icon" aria-hidden="true"></span>
+    </button>
+
     <audio id="themeSound" src="{{ url_for('static', filename='sound/theme.mp3') }}" preload="auto" loop></audio>
     <audio id="confirmSound" src="{{ url_for('static', filename='sound/confirmar.mp3') }}" preload="auto"></audio>
 
@@ -77,20 +88,44 @@
         const confirmOption = document.getElementById('sim');
         const confirmSound = document.getElementById('confirmSound');
         const themeSound = document.getElementById('themeSound');
+        const audioToggle = document.getElementById('audioToggle');
+        let themeBlocked = false;
 
         themeSound.volume = 0.35;
 
-        function playThemeSound() {
-            themeSound.play().catch(() => {
-                const unlockTheme = () => {
-                    themeSound.play().catch(() => console.log("Permissão de áudio necessária"));
-                    document.removeEventListener('click', unlockTheme);
-                    document.removeEventListener('touchstart', unlockTheme);
-                };
+        function removeAutoplayFallback() {
+            document.removeEventListener('pointerdown', unlockThemeSound);
+            document.removeEventListener('keydown', unlockThemeSound);
+        }
 
-                document.addEventListener('click', unlockTheme);
-                document.addEventListener('touchstart', unlockTheme);
-            });
+        function updateAudioButton() {
+            const isPlaying = !themeSound.paused;
+            audioToggle.classList.toggle('is-playing', isPlaying);
+            audioToggle.setAttribute('aria-pressed', String(isPlaying));
+            audioToggle.setAttribute('aria-label', isPlaying ? 'Pausar música de fundo' : 'Tocar música de fundo');
+        }
+
+        async function playThemeSound() {
+            try {
+                await themeSound.play();
+                themeBlocked = false;
+                removeAutoplayFallback();
+            } catch (err) {
+                themeBlocked = true;
+            }
+
+            updateAudioButton();
+        }
+
+        function pauseThemeSound() {
+            themeSound.pause();
+            updateAudioButton();
+        }
+
+        function unlockThemeSound() {
+            if (themeSound.paused) {
+                playThemeSound();
+            }
         }
 
         function playConfirmSound() {
@@ -98,6 +133,19 @@
             confirmSound.play().catch(() => console.log("Permissão de áudio necessária"));
         }
 
+        audioToggle.addEventListener('pointerdown', (event) => event.stopPropagation());
+        audioToggle.addEventListener('keydown', (event) => event.stopPropagation());
+        document.addEventListener('pointerdown', unlockThemeSound);
+        document.addEventListener('keydown', unlockThemeSound);
+        themeSound.addEventListener('play', updateAudioButton);
+        themeSound.addEventListener('pause', updateAudioButton);
+        audioToggle.addEventListener('click', () => {
+            if (themeSound.paused) {
+                playThemeSound();
+            } else {
+                pauseThemeSound();
+            }
+        });
         playThemeSound();
         confirmOption.addEventListener('click', playConfirmSound);
 
