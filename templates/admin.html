@@ -7,11 +7,14 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body style="display: block; padding: 20px;">
-    <div class="admin-container" style="margin: 0 auto;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h1 style="color: #3B4CCA;">Pokédex de Convidados</h1>
-            <a href="/logout" style="color: #FF0000; font-weight: bold; text-decoration: none;">Sair</a>
+<body class="admin-page">
+    <div class="admin-container">
+        <div class="admin-header">
+            <div>
+                <span class="admin-eyebrow">Painel administrativo</span>
+                <h1>Pokédex de Convidados</h1>
+            </div>
+            <a class="admin-logout" href="/logout">Sair</a>
         </div>
 
         <div class="admin-export-actions">
@@ -20,19 +23,20 @@
         </div>
         
         <div class="stats-grid">
-            <div style="max-width: 400px; margin: 0 auto;">
+            <div class="chart-panel">
                 <canvas id="statsChart"></canvas>
             </div>
-            <div>
+            <div class="summary-panel">
                 <h3>Resumo da Batalha</h3>
-                <p><strong>Confirmados:</strong> {{ confirmados|length }}</p>
-                <p><strong>Ausentes:</strong> {{ ausentes|length }}</p>
-                <p><strong>Total de Respostas:</strong> {{ confirmados|length + ausentes|length }}</p>
+                <p><strong>Pessoas confirmadas:</strong> {{ total_confirmados }}</p>
+                <p><strong>Pessoas ausentes:</strong> {{ total_ausentes }}</p>
+                <p><strong>Total de pessoas:</strong> {{ total_pessoas }}</p>
+                <p><strong>Total de respostas:</strong> {{ total_respostas }}</p>
             </div>
         </div>
 
         <div class="lists">
-            <h2 style="color: #3B4CCA; border-bottom: 2px solid #FFDE00;">Confirmados (Vão Batalhar)</h2>
+            <h2 class="admin-section-title">Confirmados (Vão Batalhar)</h2>
             <table>
                 <thead>
                     <tr>
@@ -61,7 +65,7 @@
                 </tbody>
             </table>
 
-            <h2 style="color: #FF0000; border-bottom: 2px solid #FFDE00; margin-top: 40px;">Ausentes (Ficarão no PC)</h2>
+            <h2 class="admin-section-title admin-section-title-spaced">Ausentes (Ficarão no PC)</h2>
             <table>
                 <thead>
                     <tr>
@@ -93,7 +97,7 @@
     <!-- Modal de Edição -->
     <div id="editModal" class="modal">
         <div class="modal-content">
-            <h2 style="color: #3B4CCA;">Editar Treinador</h2>
+            <h2 class="modal-title">Editar Treinador</h2>
             <form id="editForm" method="POST">
                 <div class="form-group">
                     <label for="edit_nome">Nome</label>
@@ -105,12 +109,12 @@
                 </div>
                 <div class="form-group">
                     <label for="edit_status">Status</label>
-                    <select id="edit_status" name="status" style="width: 100%; padding: 10px; border-radius: 8px;">
+                    <select id="edit_status" name="status" class="admin-select">
                         <option value="sim">Confirmado</option>
                         <option value="nao">Ausente</option>
                     </select>
                 </div>
-                <div style="margin-top: 20px; display: flex; gap: 10px;">
+                <div class="modal-actions">
                     <button type="submit" class="btn-save">Salvar Alterações</button>
                     <button type="button" class="btn-cancel" onclick="closeModal()">Cancelar</button>
                 </div>
@@ -130,15 +134,29 @@
                         labels: ['Confirmados', 'Ausentes'],
                         datasets: [{
                             data: [data.sim, data.nao],
-                            backgroundColor: ['#FFDE00', '#FF0000'],
-                            borderColor: ['#3B4CCA', '#3B4CCA'],
-                            borderWidth: 2
+                            backgroundColor: ['#b8d8c0', '#e7b8b8'],
+                            borderColor: ['#f8faf6', '#f8faf6'],
+                            borderWidth: 4,
+                            hoverBackgroundColor: ['#a8cdb2', '#ddb0b0']
                         }]
                     },
                     options: {
                         responsive: true,
+                        cutout: '64%',
                         plugins: {
-                            legend: { position: 'bottom' }
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    color: '#46515d',
+                                    boxWidth: 12,
+                                    padding: 18,
+                                    font: {
+                                        family: 'Lexend',
+                                        size: 12,
+                                        weight: '600'
+                                    }
+                                }
+                            }
                         }
                     }
                 });

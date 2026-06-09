@@ -40,6 +40,9 @@ def get_rsvp_rows():
         for resposta in respostas
     ]
 
+def rsvp_party_size(resposta):
+    return 1 + (1 if (resposta.acompanhante or "").strip() else 0)
+
 def safe_excel_text(value):
     text = str(value or "")
     if text.startswith(("=", "+", "-", "@")):
@@ -80,16 +83,28 @@ def admin():
     
     confirmados = RSVP.query.filter_by(status='sim').all()
     ausentes = RSVP.query.filter_by(status='nao').all()
+    total_confirmados = sum(rsvp_party_size(resposta) for resposta in confirmados)
+    total_ausentes = sum(rsvp_party_size(resposta) for resposta in ausentes)
     
-    return render_template('admin.html', confirmados=confirmados, ausentes=ausentes)
+    return render_template(
+        'admin.html',
+        confirmados=confirmados,
+        ausentes=ausentes,
+        total_confirmados=total_confirmados,
+        total_ausentes=total_ausentes,
+        total_pessoas=total_confirmados + total_ausentes,
+        total_respostas=len(confirmados) + len(ausentes),
+    )
 
 @app.route('/api/stats')
 def stats():
     if not admin_required():
         return jsonify({"error": "Unauthorized"}), 401
         
-    count_sim = RSVP.query.filter_by(status='sim').count()
-    count_nao = RSVP.query.filter_by(status='nao').count()
+    confirmados = RSVP.query.filter_by(status='sim').all()
+    ausentes = RSVP.query.filter_by(status='nao').all()
+    count_sim = sum(rsvp_party_size(resposta) for resposta in confirmados)
+    count_nao = sum(rsvp_party_size(resposta) for resposta in ausentes)
     
     return jsonify({
         "sim": count_sim,
