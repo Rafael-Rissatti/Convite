@@ -41,7 +41,12 @@ def get_rsvp_rows():
     ]
 
 def rsvp_party_size(resposta):
-    return 1 + (1 if (resposta.acompanhante or "").strip() else 0)
+    acompanhantes = [
+        nome.strip()
+        for nome in (resposta.acompanhante or "").split(",")
+        if nome.strip()
+    ]
+    return 1 + len(acompanhantes)
 
 def safe_excel_text(value):
     text = str(value or "")
