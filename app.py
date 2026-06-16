@@ -1,4 +1,5 @@
 import os
+import re
 from datetime import datetime
 from io import BytesIO
 from xml.sax.saxutils import escape
@@ -43,7 +44,7 @@ def get_rsvp_rows():
 def rsvp_party_size(resposta):
     acompanhantes = [
         nome.strip()
-        for nome in (resposta.acompanhante or "").split(",")
+        for nome in re.split(r"\s*(?:,|;|/|\n|\se\s)\s*", resposta.acompanhante or "", flags=re.IGNORECASE)
         if nome.strip()
     ]
     return 1 + len(acompanhantes)
