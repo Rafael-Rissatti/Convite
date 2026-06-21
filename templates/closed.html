@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Fechado</title>
+    <link rel="icon" href="{{ url_for('static', filename='ico/ico.ico') }}" sizes="any">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='ico/ico.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="closed-page">
+    <main class="closed-card" aria-label="Site fechado">
+        <img class="closed-duck" src="{{ url_for('static', filename='image/duck.jpg') }}" alt="Psyduck">
+        <h1>Site Fechado</h1>
+    </main>
+</body>
+</html>

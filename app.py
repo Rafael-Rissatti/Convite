@@ -57,10 +57,20 @@ def safe_excel_text(value):
 
 @app.route('/')
 def index():
+    return render_template('closed.html')
+
+@app.route('/admin/convite')
+def admin_invite():
+    if not admin_required():
+        return redirect(url_for('login'))
+
     return render_template('index.html')
 
 @app.route('/submit', methods=['POST'])
 def submit():
+    if not admin_required():
+        return jsonify({"status": "error", "message": "Site fechado para novos acessos."}), 401
+
     nome = request.form.get('nome')
     acompanhante = request.form.get('acompanhante')
     status = request.form.get('status')
