@@ -152,6 +152,59 @@ body {
     font-weight: 900;
 }
 
+.closed-location {
+    display: grid;
+    gap: 10px;
+    width: 100%;
+    padding: 16px 18px;
+    border: 3px solid var(--poke-blue-dark);
+    border-radius: 18px;
+    background: var(--poke-cream);
+    box-shadow: 0 10px 22px rgba(31, 34, 48, 0.12);
+    text-align: left;
+}
+
+.closed-location-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    color: var(--poke-ink);
+    font-size: 1rem;
+    font-weight: 900;
+    text-align: center;
+}
+
+.closed-location-row a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 7px 14px;
+    border: 2px solid var(--poke-blue-dark);
+    border-radius: 999px;
+    background: var(--poke-yellow);
+    color: var(--poke-blue-dark);
+    font-size: 0.95rem;
+    font-weight: 900;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.closed-location-row a:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.04);
+}
+
+.closed-location p {
+    margin: 0;
+    color: #394150;
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.45;
+    text-align: center;
+}
+
 .pokemon-stage {
     position: fixed;
     inset: 0;
